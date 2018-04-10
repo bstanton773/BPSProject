@@ -24,6 +24,11 @@ def products():
     return render_template('products.html', products = product_list)
 
 
+@app.route('/cart')
+def cart():
+    cart_list = Cart.query.all()
+    return render_template('cart.html', carts = cart_list)
+
 @app.route('/addToCart/<int:product_id>/<string:from_page>')
 def addToCart(product_id, from_page):
     if current_user.is_anonymous:
@@ -31,5 +36,5 @@ def addToCart(product_id, from_page):
     cart = Cart(user_id = current_user.id, product_id = product_id)
     db.session.add(cart)
     db.session.commit()
-    return redirect(url_for('products'))
+    return redirect(url_for('cart'))
 

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for cart in carts %}
+    <div>
+        <H1>{{ cart.cart_id }}</H1>
+        <p>Description: {{ cart.product_id }}</p>
+        <p>Price: ${{ cart.user_id }}</p>
+        <p>Stock: {{ cart.user_id }}</p>
+    </div>
+    {% endfor %}
+{% endblock %}
