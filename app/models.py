@@ -38,6 +38,8 @@ class Category(db.Model):
    category_id = db.Column(db.Integer, primary_key=True)
    name = db.Column(db.String(20))
    description = db.Column(db.String(600))
+   def __repr__(self):
+       return '<Category ()>'.format(self.description)
 
 class Product(db.Model):
    product_id = db.Column(db.Integer, primary_key=True)
@@ -47,6 +49,8 @@ class Product(db.Model):
    image = db.Column(db.String(80))
    stock = db.Column(db.Integer)
    price = db.Column(db.Float)
+   def __repr__(self):
+       return '<Product ()>'.format(self.description)
 
 class Cart(db.Model):
    cart_id = db.Column(db.Integer, primary_key=True)
