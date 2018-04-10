@@ -2,7 +2,7 @@ from app import app
 from flask import render_template, redirect, flash, url_for
 
 from flask_login import current_user
-from app.models import Post, Product
+from app.models import Post, Product, Cart
 from app import db
 
 
@@ -22,4 +22,14 @@ def bitcoin():
 def products():
     product_list = Product.query.all()
     return render_template('products.html', products = product_list)
+
+
+@app.route('/addToCart/<int:product_id>/<string:from_page>')
+def addToCart(product_id, from_page):
+    if current_user.is_anonymous:
+        return redirect(url_for('login'))
+    cart = Cart(user_id = current_user.id, product_id = product_id)
+    db.session.add(cart)
+    db.session.commit()
+    return redirect(url_for('products'))
 
