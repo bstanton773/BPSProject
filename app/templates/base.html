@@ -12,6 +12,7 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">Starter</h5>
     <nav class="my-2 my-md-0 mr-md-3">
       <a class="p-2 text-dark" href="{{url_for('bitcoin')}}">BitCoin</a>
+      <a class="p-2 text-dark" href="{{url_for('products')}}">Products</a>
       <!--<a class="p-2 text-dark" href="#">Pricing</a>-->
     </nav>
       {% if current_user.is_anonymous %}
@@ -39,4 +40,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     {% block js %}{% endblock %}
   </body>
-</html>ml>
+</html>
