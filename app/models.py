@@ -1,6 +1,7 @@
-from app import login, db
+from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,3 +22,33 @@ class User(UserMixin, db.Model):
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(20))
+    subtitle = db.Column(db.String(40))
+    body = db.Column(db.String(280))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    def __repr__(self):
+        return '<Post {}>'.format(self.body)
+
+
+class Category(db.Model):
+   category_id = db.Column(db.Integer, primary_key=True)
+   name = db.Column(db.String(20))
+   description = db.Column(db.String(600))
+
+class Product(db.Model):
+   product_id = db.Column(db.Integer, primary_key=True)
+   category_id = db.Column(db.Integer, db.ForeignKey('category.category_id'))
+   name = db.Column(db.String(20))
+   description = db.Column(db.String(600))
+   image = db.Column(db.String(80))
+   stock = db.Column(db.Integer)
+   price = db.Column(db.Float)
+
+class Cart(db.Model):
+   cart_id = db.Column(db.Integer, primary_key=True)
+   product_id = db.Column(db.Integer, db.ForeignKey('product.product_id'))
+   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
