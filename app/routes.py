@@ -55,3 +55,15 @@ def removeFromCart(product_id, from_page):
 def details(product_id):
     product = Product.query.filter_by(product_id=product_id).first()
     return render_template('details.html', product=product)
+
+@app.route('/checkout')
+def checkout():
+    if current_user.is_anonymous:
+        return redirect(url_for('login'))
+    product_in_cart = Cart.query.filter_by(user_id = current_user.id).join(
+        Product, Cart.product_id == Product.product_id).add_columns(
+        Product.name, Product.price, Product.image, Product.product_id).all()
+    #subtotal
+
+    return render_template('checkout.html', products=product_in_cart, sub_total=300)
+
