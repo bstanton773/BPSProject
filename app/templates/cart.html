@@ -1,12 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% for cart in carts %}
+    <h2>Cart</h2>
+    {% for product in products %}
     <div>
-        <H1>{{ cart.cart_id }}</H1>
-        <p>Description: {{ cart.product_id }}</p>
-        <p>Price: ${{ cart.user_id }}</p>
-        <p>Stock: {{ cart.user_id }}</p>
+        <h4>{{ product.name }}</h4>
+        Price: ${{ product.price }}
+        <br>
+        Image: {{ product.image }}
+        <br>
+    </div>
+    <div>
+        <a href='/product/{{product.product_id}}'> Detail </a>
+        <br>
+        <a href='/addToCart/{{product.product_id}}/cart'> Add to Cart </a>
+        <br>
+        <a href='/removeFromCart/{{product.product_id}}/cart'> Remove </a>
     </div>
     {% endfor %}
 {% endblock %}
