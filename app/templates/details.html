@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Details</h2>
+    <div>
+        <h4>{{ product.name }}</h4>
+        Price: ${{ product.price }}
+        <br>
+        Description: {{ product.description }}
+        <br>
+    </div>
+    <div>
+        <a href='/product/{{product.product_id}}'> Detail </a>
+        <br>
+        <a href='/addToCart/{{product.product_id}}/cart'> Add to Cart </a>
+        <br>
+        <a href='/removeFromCart/{{product.product_id}}/cart'> Remove </a>
+    </div>
+{% endblock %}

@@ -50,3 +50,8 @@ def removeFromCart(product_id, from_page):
     db.session.delete(cart)
     db.session.commit()
     return redirect(url_for('cart'))
+
+@app.route('/product/<int:product_id>')
+def details(product_id):
+    product = Product.query.filter_by(product_id=product_id).first()
+    return render_template('details.html', product=product)

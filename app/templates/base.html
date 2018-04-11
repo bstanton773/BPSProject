@@ -19,6 +19,7 @@
       <a class="btn btn-outline-primary" href="{{url_for('register')}}">Sign up</a>
       <a class="btn btn-link text-dark" href="{{url_for('login')}}">Login</a>
       {% else %}
+      <a class="p-2 text-dark" href="{{url_for('cart')}}">Cart</a>
       <a class="btn btn-link text-dark" href="{{url_for('logout')}}">Logout</a>
       <div>Hello, {{current_user.username}}!</div>
       {% endif %}
