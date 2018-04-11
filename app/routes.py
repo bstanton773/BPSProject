@@ -63,7 +63,13 @@ def checkout():
     product_in_cart = Cart.query.filter_by(user_id = current_user.id).join(
         Product, Cart.product_id == Product.product_id).add_columns(
         Product.name, Product.price, Product.image, Product.product_id).all()
+    #count
+    count = Cart.query.filter_by(user_id = current_user.id).count()
     #subtotal
+    sum = 0
+    for product in product_in_cart:
+        sum += product.price
 
-    return render_template('checkout.html', products=product_in_cart, sub_total=300)
+
+    return render_template('checkout.html', products=product_in_cart, count=count, sub_total=sum)
 
