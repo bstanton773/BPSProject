@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, redirect, flash, url_for
+from flask import render_template, redirect, flash, url_for, request
 
 from flask_login import current_user
 from app.models import Post, Product, Cart
@@ -49,7 +49,10 @@ def removeFromCart(product_id, from_page):
     cart = Cart.query.filter_by(user_id=current_user.id, product_id=product_id).first()
     db.session.delete(cart)
     db.session.commit()
-    return redirect(url_for('cart'))
+    if from_page == 'checkout':
+        return redirect(url_for('checkout'))
+    else:
+        return redirect(url_for('cart'))
 
 @app.route('/product/<int:product_id>')
 def details(product_id):
@@ -69,7 +72,26 @@ def checkout():
     sum = 0
     for product in product_in_cart:
         sum += product.price
-
-
     return render_template('checkout.html', products=product_in_cart, count=count, sub_total=sum)
 
+@app.route("/checkout_action", methods=['POST'])
+def checkout_action():
+
+   # get submit bill info
+   cardname = request.form.get('cardname')
+   cardnumber = request.form.get('cardnumber')
+
+
+   # gather selected checkout items
+   product_in_cart = Cart.query.filter_by(user_id = current_user.id).join(
+       Product, Cart.product_id == Product.product_id).add_columns(
+       Product.name, Product.price, Product.image, Product.product_id).all()
+
+   # create a checkout submit record and put it to the db
+
+
+
+   # remove selected checkout items
+
+   print("checkout_action:" + cardname + cardnumber)
+   return render_template("checkout_action.html")
