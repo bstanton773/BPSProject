@@ -1,6 +1,7 @@
 from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 
 class User(UserMixin, db.Model):
@@ -60,7 +61,7 @@ class Cart(db.Model):
 class Checkout(db.Model):
     checkout_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    Date = db.Column(db.DateTime)
+    Date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 class Receipt(db.Model):
     receipt_id = db.Column(db.Integer, primary_key=True)

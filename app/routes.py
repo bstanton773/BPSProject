@@ -2,8 +2,9 @@ from app import app
 from flask import render_template, redirect, flash, url_for, request
 
 from flask_login import current_user
-from app.models import Post, Product, Cart
+from app.models import Post, Product, Cart, Checkout, Receipt
 from app import db
+import datetime
 
 
 @app.route('/')
@@ -88,10 +89,15 @@ def checkout_action():
        Product.name, Product.price, Product.image, Product.product_id).all()
 
    # create a checkout submit record and put it to the db
-
-
-
+   checkout = Checkout(user_id=current_user.id)
+   db.session.add(checkout)
+   db.session.commit()
+   for product in product_in_cart:
+       receipt = Receipt(checkout_id=checkout.checkout_id, product_id= product.product_id)
+       db.session.add(receipt)
+       db.session.commit()
    # remove selected checkout items
+   
 
    print("checkout_action:" + cardname + cardnumber)
    return render_template("checkout_action.html")
