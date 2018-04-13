@@ -4,7 +4,6 @@ from flask import render_template, redirect, flash, url_for, request
 from flask_login import current_user
 from app.models import Post, Product, Cart, Checkout, Receipt
 from app import db
-import datetime
 
 
 @app.route('/')
@@ -97,7 +96,10 @@ def checkout_action():
        db.session.add(receipt)
        db.session.commit()
    # remove selected checkout items
-   
+   for product in product_in_cart:
+       empty_cart = Cart.query.filter_by(user_id=current_user.id, product_id=product.product_id).first()
+       db.session.delete(empty_cart)
+       db.session.commit()
 
    print("checkout_action:" + cardname + cardnumber)
    return render_template("checkout_action.html")
