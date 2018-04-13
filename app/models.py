@@ -56,3 +56,13 @@ class Cart(db.Model):
    cart_id = db.Column(db.Integer, primary_key=True)
    product_id = db.Column(db.Integer, db.ForeignKey('product.product_id'))
    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Checkout(db.Model):
+    checkout_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    Date = db.Column(db.DateTime)
+
+class Receipt(db.Model):
+    receipt_id = db.Column(db.Integer, primary_key=True)
+    checkout_id = db.Column(db.Integer, db.ForeignKey('checkout.checkout_id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('product.product_id'))
