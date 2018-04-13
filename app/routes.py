@@ -101,5 +101,10 @@ def checkout_action():
        db.session.delete(empty_cart)
        db.session.commit()
 
+    #Display receipt
+   final_receipt = Receipt.query.filter_by(checkout_id = checkout.checkout_id).join(
+       Product, Receipt.product_id == Product.product_id).add_columns(
+       Product.name, Product.price).all()
+
    print("checkout_action:" + cardname + cardnumber)
-   return render_template("checkout_action.html")
+   return render_template("checkout_action.html", final_receipt=final_receipt)
